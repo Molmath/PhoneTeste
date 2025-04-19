@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://dcr6koyyhfe5p"]
+
+[ext_resource type="Texture2D" uid="uid://clin2gu2tvbqr" path="res://Assets/Placeholder/Spawnabel/Trash/Placeholderchips.png" id="1_3o6oi"]
+[ext_resource type="Script" path="res://Scripts/Spawnable/Spawnable.cs" id="1_6uki2"]
+[ext_resource type="Texture2D" uid="uid://bl87g11r2qw0f" path="res://Assets/Placeholder/Spawnabel/Trash/Placeholderbouteille.png" id="3_wd7c6"]
+[ext_resource type="Texture2D" uid="uid://b4f43la7ngqs7" path="res://Assets/Placeholder/Spawnabel/Trash/Placeholdersacplastic.png" id="4_3jtst"]
+
+[node name="Trash" type="Node2D" node_paths=PackedStringArray("renderer")]
+script = ExtResource("1_6uki2")
+renderer = NodePath("Renderer")
+possibilityTexture = Array[Texture2D]([ExtResource("1_3o6oi"), ExtResource("3_wd7c6"), ExtResource("4_3jtst")])
+possibilityColor = PackedColorArray(0.840227, 0.792942, 0.388994, 1, 0.950189, 0.709033, 0.706923, 1, 0.720323, 0.768375, 0.974657, 1, 0.464329, 0.839626, 0.959909, 1, 0.501022, 0.876788, 0.614048, 1, 0.951748, 0.751671, 0, 1, 0.96952, 0.640789, 0.994999, 1, 1, 0.692463, 0.609831, 1, 0.997487, 0.702163, 0.536701, 1, 0.994518, 0.716959, 0.37741, 1)
+minScale = 0.2
+maxScale = 0.5
+speedClickScale = 0.2
+bounceShift = 2.0
+distanceClickMarge = 50.0
+
+[node name="Renderer" type="Sprite2D" parent="."]
+texture = ExtResource("1_3o6oi")
