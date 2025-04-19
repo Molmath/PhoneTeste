@@ -1,13 +1,15 @@
-[gd_scene load_steps=4 format=3 uid="uid://ledg6w3jubpl"]
+[gd_scene load_steps=5 format=3 uid="uid://ledg6w3jubpl"]
 
 [ext_resource type="Script" path="res://Teste/Main.cs" id="1_ykqwm"]
 [ext_resource type="PackedScene" uid="uid://dcr6koyyhfe5p" path="res://Scenes/Spawnable/Trash.tscn" id="2_4jsef"]
 [ext_resource type="PackedScene" uid="uid://do42og7ljhfe3" path="res://Scenes/Spawnable/Fish.tscn" id="2_hlmcf"]
+[ext_resource type="PackedScene" uid="uid://b78v2u5bbbrpb" path="res://Scenes/Interactivable/grapple.tscn" id="4_b458b"]
 
 [node name="Node2D" type="Node2D" node_paths=PackedStringArray("spawnTimer")]
 script = ExtResource("1_ykqwm")
 spawnTrash = ExtResource("2_4jsef")
 spawnFish = ExtResource("2_hlmcf")
+harpoonScene = ExtResource("4_b458b")
 fishProbability = 0.3
 spawnTimer = NodePath("Timer")
 downSpawnTime = 0.001

@@ -10,6 +10,7 @@ namespace Com.IsartDigital.ProjectName
     {
         public const string
         SCALE = "scale",
+        OFFSET = "offset",
         ROTATION = "rotation",
         ROTATION_DEGREES = "rotation_degrees";
 

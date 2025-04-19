@@ -9,6 +9,7 @@ public partial class Main : Node2D
 
     [Export] PackedScene spawnTrash;
     [Export] PackedScene spawnFish;
+    [Export] PackedScene harpoonScene;
 
     [Export] float fishProbability = 0.2f;
 
@@ -26,11 +27,13 @@ public partial class Main : Node2D
     public List<Spawnable> spawnables = new List<Spawnable>();
     public float Time {  get; private set; }
     [Export] float timeScale = 1f;
+    Harpoon harpoon;
     public override void _Ready()
     {
         base._Ready();
-        
         instance = this;
+        harpoon = harpoonScene.Instantiate<Harpoon>();
+        AddChild(harpoon);
         screenSize = GetWindow().Size;
         GetWindow().SizeChanged += () => screenSize = GetWindow().Size;
         spawnTimer.Timeout += () =>
@@ -48,7 +51,9 @@ public partial class Main : Node2D
             foreach (Spawnable lSpawn in spawnables)
             {
                 lSpawn.ActionCLick(lTouch.Position);
+                
             }
+            harpoon.Spear(lTouch.Position);
         }
     }
     public override void _Process(double delta)
@@ -66,21 +71,7 @@ public partial class Main : Node2D
         else lNode = spawnTrash.Instantiate<Spawnable>();
 
         int lRandInt = rand.RandiRange(0, 3);
-        switch(lRandInt)
-        {
-            case 0:
-                lNode.Position = new Vector2(0, rand.RandfRange(0, screenSize.Y));
-                break;
-            case 1:
-                lNode.Position = new Vector2(rand.RandfRange(0, screenSize.X), 0);
-                break;
-            case 2:
-                lNode.Position = new Vector2(rand.RandfRange(0, screenSize.X), screenSize.Y);
-                break;
-            case 3:
-                lNode.Position = new Vector2(screenSize.X, rand.RandfRange(0, screenSize.Y));
-                break;
-        }
+                lNode.Position = new Vector2(rand.RandfRange(0, screenSize.X), rand.RandfRange(0, screenSize.Y));
         AddChild(lNode);
     }
 }

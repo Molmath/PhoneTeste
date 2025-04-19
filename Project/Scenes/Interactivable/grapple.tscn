@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://b78v2u5bbbrpb"]
+
+[ext_resource type="Script" path="res://Scripts/Harpoon.cs" id="1_854ra"]
+[ext_resource type="Texture2D" uid="uid://b2sh7ogenh704" path="res://Assets/Placeholder/interactivable/Placeholder_harpon.png" id="1_hl1yl"]
+
+[node name="Grapple" type="Node2D" node_paths=PackedStringArray("renderer")]
+script = ExtResource("1_854ra")
+renderer = NodePath("Renderer")
+
+[node name="Renderer" type="Sprite2D" parent="."]
+rotation = 1.5708
+texture = ExtResource("1_hl1yl")
+offset = Vector2(-17.22, 292.215)

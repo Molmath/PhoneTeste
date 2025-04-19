@@ -34,9 +34,12 @@ public partial class Spawnable : Node2D
 
     Action<float> processAction;
     private bool active;
+
+    Vector2 initScale;
     public override void _Ready()
 	{
         InitShape();
+
         main = Main.instance;
         main.spawnables.Add(this);
         rotationDirection = GlobalPosition.LookPosition(main.screenSize * 0.5f);
@@ -54,6 +57,10 @@ public partial class Spawnable : Node2D
         if (possibilityColor != null) Modulate = possibilityColor.RandIndex(rand);
         else Modulate = new Color(rand.RandfRange(0.5f, 1f), rand.RandfRange(0.5f, 1f), rand.RandfRange(0.5f, 1f));
         Scale = Vector2.One * rand.RandfRange(minScale, maxScale);
+        initScale = Scale;
+        Scale = Vector2.Zero;
+        Tween lTween = CreateTween();
+        lTween.TweenProperty(this, Utils.SCALE, initScale, speedClickScale);
     }
     public override void _Process(double delta)
     {
@@ -63,14 +70,14 @@ public partial class Spawnable : Node2D
     }
     private void Move(float pDelta)
     {
-        Position += Utils.MoveWithRotation(rotationDirection + Mathf.Pi * 0.5f, speed * pDelta) * Mathf.Sin(Main.instance.Time + bounceShift);
-        Position += Utils.MoveWithRotation(rotationDirection, (speed * wavePower) * pDelta) * Mathf.Sin(Main.instance.Time + bounceShift);
-        Position += Utils.MoveWithRotation(rotationDirection, speed * pDelta);
+        Position += (Utils.MoveWithRotation(rotationDirection + Mathf.Pi * 0.5f, speed * pDelta) * Mathf.Sin(Main.instance.Time + bounceShift))
+                 + (Utils.MoveWithRotation(rotationDirection, (speed * wavePower) * pDelta) * Mathf.Sin(Main.instance.Time + bounceShift))
+                 + (Utils.MoveWithRotation(rotationDirection, speed * pDelta));
     }
     public void ActionCLick(Vector2 pClickPosition)
     {
         if (active) return;
-        GD.Print(GlobalPosition.DistanceTo(pClickPosition));
+
         if(GlobalPosition.DistanceTo(pClickPosition) <= distanceClickMarge)
         {
             active = true; 
@@ -85,8 +92,9 @@ public partial class Spawnable : Node2D
         }
           
     }
-    private void Finish()
+    protected virtual void Finish()
     {
+
         QueueFree();
     }
     protected override void Dispose(bool disposing)
