@@ -50,10 +50,8 @@ public partial class Main : Node2D
         {
             foreach (Spawnable lSpawn in spawnables)
             {
-                lSpawn.ActionCLick(lTouch.Position);
-                
+                if(lSpawn.ActionCLick(lTouch.Position)) harpoon.Spear(lSpawn);
             }
-            harpoon.Spear(lTouch.Position);
         }
     }
     public override void _Process(double delta)

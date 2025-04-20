@@ -14,7 +14,7 @@ minScale = 0.2
 maxScale = 0.5
 speedClickScale = 0.2
 bounceShift = 2.0
-distanceClickMarge = 50.0
+distanceClickMarge = 200.0
 
 [node name="Renderer" type="Sprite2D" parent="."]
 texture = ExtResource("1_3o6oi")

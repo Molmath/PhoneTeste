@@ -74,11 +74,11 @@ public partial class Spawnable : Node2D
                  + (Utils.MoveWithRotation(rotationDirection, (speed * wavePower) * pDelta) * Mathf.Sin(Main.instance.Time + bounceShift))
                  + (Utils.MoveWithRotation(rotationDirection, speed * pDelta));
     }
-    public void ActionCLick(Vector2 pClickPosition)
+    public bool ActionCLick(Vector2 pClickPosition)
     {
-        if (active) return;
+        if (active) return false;
 
-        if(GlobalPosition.DistanceTo(pClickPosition) <= distanceClickMarge)
+        if(GlobalPosition.DistanceTo(pClickPosition) <= distanceClickMarge * Scale.X)
         {
             active = true; 
             processAction -= Move;
@@ -89,13 +89,13 @@ public partial class Spawnable : Node2D
             lTween.TweenProperty(this, Utils.SCALE, Scale + Scale.Normalized() * Vector2.One * ScaleBounce, speedClickScale);
             lTween.Parallel().TweenProperty(this, Utils.ROTATION_DEGREES,RotationDegrees + rand.RandfRange(-RotationDegreesBounce, RotationDegreesBounce) , speedClickScale);
             lTween.Finished += Finish;
+            return true;
         }
-          
+        return false;
     }
     protected virtual void Finish()
     {
 
-        QueueFree();
     }
     protected override void Dispose(bool disposing)
     {

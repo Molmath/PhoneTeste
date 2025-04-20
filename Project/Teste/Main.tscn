@@ -12,7 +12,8 @@ spawnFish = ExtResource("2_hlmcf")
 harpoonScene = ExtResource("4_b458b")
 fishProbability = 0.3
 spawnTimer = NodePath("Timer")
-downSpawnTime = 0.001
+downSpawnTime = 0.376
+minTime = 0.1
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 1.5

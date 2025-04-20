@@ -4,8 +4,11 @@
 [ext_resource type="Texture2D" uid="uid://b2sh7ogenh704" path="res://Assets/Placeholder/interactivable/Placeholder_harpon.png" id="1_hl1yl"]
 
 [node name="Grapple" type="Node2D" node_paths=PackedStringArray("renderer")]
+rotation = -1.5708
 script = ExtResource("1_854ra")
 renderer = NodePath("Renderer")
+spearSpeed = 1.52
+QueueImpact = 2.215
 
 [node name="Renderer" type="Sprite2D" parent="."]
 rotation = 1.5708
