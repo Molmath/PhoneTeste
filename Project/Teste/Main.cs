@@ -16,6 +16,25 @@ public partial class Main : Node2D
     [Export] Timer spawnTimer;
     [Export] float downSpawnTime = 0.1f;
     [Export] float minTime = 0.2f;
+    [ExportGroup("accecibility")]
+    [Export] float clampSpawnTimeDifficulty = 0.8f;
+    [Export] float clampSpawnSpeedDifficulty = 1f;
+    private float initTime;
+
+    public static float difficulty = 0;
+    public static float globalSpeed;
+    [Export] public float addSpeedDifficulty = 100;
+    public float Difficulty
+    { 
+        get { return difficulty; } 
+        set {
+            difficulty = value;
+            if (value >= clampSpawnTimeDifficulty) spawnTimer.WaitTime = (initTime - initTime * clampSpawnTimeDifficulty);
+            else spawnTimer.WaitTime = (initTime - initTime * value);
+            if (value >= clampSpawnSpeedDifficulty) globalSpeed = addSpeedDifficulty * value;
+
+        } 
+    }
 
     RandomNumberGenerator rand = new();
     Spawnable actualSpawn = null;
@@ -39,9 +58,11 @@ public partial class Main : Node2D
         spawnTimer.Timeout += () =>
         {
             CreateSpawn();
-           if(spawnTimer.WaitTime - downSpawnTime >= minTime) spawnTimer.WaitTime -= downSpawnTime;
+          // if(spawnTimer.WaitTime - downSpawnTime >= minTime) spawnTimer.WaitTime -= downSpawnTime;
         };
-        
+        initTime = (float)spawnTimer.WaitTime;
+
+
     }
     public override void _Input(InputEvent @event)
     {
@@ -58,6 +79,9 @@ public partial class Main : Node2D
     {
         float lDelta = (float )delta;
         Time += timeScale * lDelta;
+        
+        Difficulty += 0.01f * lDelta;
+        GD.Print(Difficulty);
 
     }
     private void CreateSpawn()

@@ -10,7 +10,9 @@ public partial class Harpoon : Node2D
     [Export] Sprite2D renderer;
     [Export] float spearSpeed = 5f;
     [Export] float QueueImpact = 1f;
-    [Export] float comboPosition = 150f;
+    [Export] float minComboPosition = 150f;
+    [Export] float maxComboPosition = 210f;
+    float comboPosition;
     Main main = null;
     Vector2 initOffset;
     Queue<Spawnable> spearObjectif = new();
@@ -21,6 +23,7 @@ public partial class Harpoon : Node2D
     Action<Spawnable, float> spearAction;
 
     private float spearWeigh = 0;
+    private float rotationWeigh = 0;
 
     Vector2 curentOffset;
     Vector2 actualOffset;
@@ -28,6 +31,7 @@ public partial class Harpoon : Node2D
     float curentRotation,
           actualRotation;
 
+    RandomNumberGenerator rand = new();
     public void Spear(Spawnable pObj)
     {
 
@@ -38,60 +42,49 @@ public partial class Harpoon : Node2D
         }
 
         action = true;
-        //LookAt(pObj.GlobalPosition);
+     
         actualRotation = Rotation;
+
         spawnableCurrent = pObj;
-        spearAction += RotationToObj;
-    }
-    private Vector2[] easeCustomPoints = new Vector2[]
- {
-    new Vector2(0.00f, 0.00f),
-    new Vector2(0.10f, 0.25f),
-    new Vector2(0.25f, 0.55f),
-    new Vector2(0.45f, 0.85f),
-    new Vector2(0.60f, 1.05f), // dépasse 1 ici
-    new Vector2(0.75f, 1.02f),
-    new Vector2(0.90f, 1.01f),
-    new Vector2(1.00f, 1.00f)
- };
 
-    private float EaseCustomA(float t)
-    {
-        // t est entre 0 et 1
-        for (int i = 0; i < easeCustomPoints.Length - 1; i++)
+        comboPosition = rand.RandfRange(minComboPosition, maxComboPosition);
+        if (spearObjectif.Count == 0)
         {
-            Vector2 p0 = easeCustomPoints[i];
-            Vector2 p1 = easeCustomPoints[i + 1];
-
-            if (t >= p0.X && t <= p1.X)
-            {
-                float localT = (t - p0.X) / (p1.X - p0.X);
-                return Mathf.Lerp(p0.Y, p1.Y, localT);
-            }
+            LookAt(pObj.GlobalPosition);
+            
+           
         }
+        spearAction += SpearLerp;
+       // spearAction += RotationToObj;
 
-        return 1f; // Si t dépasse 1, on retourne la fin de la courbe
     }
+
 
     private void SpearLerp(Spawnable pObj, float pDelta)
     {
         if (spearWeigh < 1)
         {
             spearWeigh += (spearSpeed + (spearSpeed * (spearObjectif.Count * QueueImpact))) * pDelta;
-            float easedWeight = EaseCustomA(Mathf.Clamp(spearWeigh, 0f, 1f));
+            float easedWeight = LerpEasy.easeCustomPoints.EaseTrans(Mathf.Clamp(spearWeigh, 0f, 1f));
             curentOffset = actualOffset.Lerp(initOffset - new Vector2(0, GlobalPosition.DistanceTo(pObj.GlobalPosition)), easedWeight);
             renderer.Offset = curentOffset;
             return;
         }
 
         spearAction -= SpearLerp;
-        pObj.QueueFree();
+
+        GrabTrash();
+
         spearWeigh = 0;
         actualOffset = renderer.Offset;
 
         if (spearObjectif.Count > 0)
         {
+            rotaObj = spearObjectif.Peek();
+
             spearAction += ReturnToComboPosition;
+            
+            spearAction += RotationToObj;
         }
         else
         {
@@ -113,18 +106,22 @@ public partial class Harpoon : Node2D
         spearAction -= ReturnToComboPosition;
         ActionFinish();
     }
+    Spawnable rotaObj;
     private void RotationToObj(Spawnable pObj, float pDelta)
     {
-        if (spearWeigh < 1)
+        if (rotationWeigh < 1)
         {
-            spearWeigh += (spearSpeed + (spearSpeed * (spearObjectif.Count * QueueImpact))) * pDelta;
-            curentRotation = Mathf.Lerp(actualRotation, Utils.LookPosition(GlobalPosition, pObj.GlobalPosition), spearWeigh);
+            rotationWeigh += (spearSpeed + (spearSpeed * (spearObjectif.Count * QueueImpact))) * pDelta;
+            float easedWeight = LerpEasy.easeBackOutPoints.EaseTrans(Mathf.Clamp(rotationWeigh, 0f, 1f));
+            curentRotation = Mathf.Lerp(actualRotation, Utils.LookPosition(GlobalPosition, rotaObj.GlobalPosition), easedWeight);
             Rotation = curentRotation;
             return;
         }
-        spearWeigh = 0;
+        rotationWeigh = 0;
+
         spearAction -= RotationToObj;
-        spearAction += SpearLerp;
+
+        //spearAction += SpearLerp;
     }
     public void ReturnToBase(Spawnable pObj, float pDelta)
     {
@@ -147,13 +144,13 @@ public partial class Harpoon : Node2D
     }
     private void GrabTrash()
     {
+        ScoreManager.GetInstance().GlobalScore += (int)(spawnableCurrent.reward + spawnableCurrent.reward * Main.difficulty);
         spawnableCurrent.QueueFree();
+       
     }
     private void ActionFinish()
     {
         actualOffset = renderer.Offset;
-        GD.Print("dedans");
-        GD.Print(spearObjectif.Count);
         if (spearObjectif.Count > 0)
         {
             action = false;

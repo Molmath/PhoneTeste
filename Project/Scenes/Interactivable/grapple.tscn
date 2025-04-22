@@ -9,8 +9,9 @@ script = ExtResource("1_854ra")
 renderer = NodePath("Renderer")
 spearSpeed = 1.52
 QueueImpact = 2.215
+minComboPosition = 100.0
 
 [node name="Renderer" type="Sprite2D" parent="."]
 rotation = 1.5708
 texture = ExtResource("1_hl1yl")
-offset = Vector2(-17.22, 292.215)
+offset = Vector2(-17.22, 289.76)

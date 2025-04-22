@@ -12,7 +12,58 @@ namespace Com.IsartDigital.ProjectName
         SCALE = "scale",
         OFFSET = "offset",
         ROTATION = "rotation",
-        ROTATION_DEGREES = "rotation_degrees";
+        ROTATION_DEGREES = "rotation_degrees",
+        SELF_MODULATE = "self_modulate";
+        public static T GetDeepestChildWithClasse<T>(this Node pRoot) where T : Node
+        {
+            T result = (T)pRoot;
+            int maxDepth = -1;
+
+            void Search(Node current, int depth)
+            {
+                if (current is T match && depth > maxDepth)
+                {
+                    result = match;
+                    maxDepth = depth;
+                }
+
+                foreach (Node child in current.GetChildren())
+                {
+                    Search(child, depth + 1);
+                }
+            }
+
+            Search(pRoot, 0);
+            return result;
+        }
+
+        public static T GetFirstParentWithClasse<T>(this T pChild) where T : Node
+        {
+            T lPapa = pChild;
+            while (true)
+            {
+                if (lPapa.GetParent() is T lDac) lPapa = lDac;
+                else break;
+            }
+            return lPapa;
+        }
+        public static T GetFirstParentWithClasse<T>(this T pChild, out int nParent) where T : Node
+        {
+            T lPapa = pChild;
+            int PNDepth = 0;
+            while (true)
+            {
+                if (lPapa.GetParent() is T lDac)
+                {
+                    lPapa = lDac;
+                    PNDepth++;
+                }
+                    
+                else break;
+            }
+            nParent = PNDepth;
+            return lPapa;
+        }
 
         public static float LookPosition(this Vector2 pStartPosition, Vector2 pEndPosition)
         {

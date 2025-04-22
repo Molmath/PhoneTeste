@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://igak0wflf1ku"]
+
+[ext_resource type="Script" path="res://Scripts/Manager/ScoreManager.cs" id="1_j58th"]
+[ext_resource type="PackedScene" uid="uid://bfvob1am68jv3" path="res://Scenes/Manager/Score/Score Digit.tscn" id="2_lcp7i"]
+
+[node name="ScoreManager" type="Node2D" node_paths=PackedStringArray("ScoreContainer", "timer")]
+script = ExtResource("1_j58th")
+microDigit = ExtResource("2_lcp7i")
+ScoreContainer = NodePath("Score Container")
+timer = NodePath("Timer")
+
+[node name="Score Container" type="CanvasLayer" parent="."]
+offset = Vector2(100, 30)
+transform = Transform2D(1, 0, 0, 1, 100, 30)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true

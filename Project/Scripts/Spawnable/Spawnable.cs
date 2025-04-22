@@ -31,6 +31,8 @@ public partial class Spawnable : Node2D
     protected RandomNumberGenerator rand = new();
     [ExportGroup("Accessibility")]
     [Export] float distanceClickMarge = 100f;
+    [Export] private int baseReward = 100;
+    public int reward;
 
     Action<float> processAction;
     private bool active;
@@ -39,6 +41,7 @@ public partial class Spawnable : Node2D
     public override void _Ready()
 	{
         InitShape();
+        reward = baseReward;
 
         main = Main.instance;
         main.spawnables.Add(this);
@@ -55,7 +58,7 @@ public partial class Spawnable : Node2D
     {
         if (possibilityTexture != null) renderer.Texture = possibilityTexture.RandIndex(rand);
         if (possibilityColor != null) Modulate = possibilityColor.RandIndex(rand);
-        else Modulate = new Color(rand.RandfRange(0.5f, 1f), rand.RandfRange(0.5f, 1f), rand.RandfRange(0.5f, 1f));
+        else renderer.SelfModulate = new Color(rand.RandfRange(0.5f, 1f), rand.RandfRange(0.5f, 1f), rand.RandfRange(0.5f, 1f));
         Scale = Vector2.One * rand.RandfRange(minScale, maxScale);
         initScale = Scale;
         Scale = Vector2.Zero;
@@ -70,9 +73,11 @@ public partial class Spawnable : Node2D
     }
     private void Move(float pDelta)
     {
-        Position += (Utils.MoveWithRotation(rotationDirection + Mathf.Pi * 0.5f, speed * pDelta) * Mathf.Sin(Main.instance.Time + bounceShift))
+        Vector2 lNewPositon = (Utils.MoveWithRotation(rotationDirection + Mathf.Pi * 0.5f, speed * pDelta) * Mathf.Sin(Main.instance.Time + bounceShift))
                  + (Utils.MoveWithRotation(rotationDirection, (speed * wavePower) * pDelta) * Mathf.Sin(Main.instance.Time + bounceShift))
-                 + (Utils.MoveWithRotation(rotationDirection, speed * pDelta));
+                 + (Utils.MoveWithRotation(rotationDirection, Main.globalSpeed + speed * pDelta));
+        Position += lNewPositon;
+        LookAt(Position + lNewPositon.Normalized());
     }
     public bool ActionCLick(Vector2 pClickPosition)
     {

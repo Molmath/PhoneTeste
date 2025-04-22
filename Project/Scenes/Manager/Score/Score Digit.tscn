@@ -1,0 +1,43 @@
+[gd_scene load_steps=3 format=3 uid="uid://bfvob1am68jv3"]
+
+[ext_resource type="Script" path="res://Scripts/Manager/ScoreDigit.cs" id="1_6h28o"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_5h2v5"]
+font_size = 106
+outline_size = 15
+outline_color = Color(0, 0, 0.529412, 0.74902)
+shadow_size = 16
+shadow_color = Color(1, 1, 1, 0.301961)
+
+[node name="Score digit" type="Control" node_paths=PackedStringArray("label")]
+self_modulate = Color(0.820401, 0.524723, 0.473914, 1)
+layout_mode = 3
+anchor_right = 0.0451395
+anchor_bottom = 0.192901
+offset_right = 1098.39
+offset_bottom = 521.44
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(30.43, 77.615)
+script = ExtResource("1_6h28o")
+label = NodePath("Label")
+digitDistance = Vector2(55, 0)
+shackColor = PackedColorArray(0.976059, 0.286018, 0, 1, 0.907447, 0.381087, 0, 1, 1, 0.232101, 0.147767, 1, 1, 0.110056, 0.176418, 1)
+shackIntensityRight = 0.0
+shackIntensityLeft = 6.0
+shackIntensityUp = 3.0
+shackIntensityDown = 3.0
+depthIntensities = 3.5
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="."]
+self_modulate = Color(1, 0.375127, 0.334074, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.084
+anchor_bottom = 0.212
+offset_right = 1061.29
+offset_bottom = 516.083
+pivot_offset = Vector2(42.62, 77.43)
+text = "0"
+label_settings = SubResource("LabelSettings_5h2v5")

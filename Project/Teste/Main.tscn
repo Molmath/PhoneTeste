@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://ledg6w3jubpl"]
+[gd_scene load_steps=6 format=3 uid="uid://ledg6w3jubpl"]
 
 [ext_resource type="Script" path="res://Teste/Main.cs" id="1_ykqwm"]
 [ext_resource type="PackedScene" uid="uid://dcr6koyyhfe5p" path="res://Scenes/Spawnable/Trash.tscn" id="2_4jsef"]
 [ext_resource type="PackedScene" uid="uid://do42og7ljhfe3" path="res://Scenes/Spawnable/Fish.tscn" id="2_hlmcf"]
 [ext_resource type="PackedScene" uid="uid://b78v2u5bbbrpb" path="res://Scenes/Interactivable/grapple.tscn" id="4_b458b"]
+[ext_resource type="PackedScene" uid="uid://igak0wflf1ku" path="res://Scenes/Manager/Score/ScoreManager.tscn" id="5_h8fw6"]
 
 [node name="Node2D" type="Node2D" node_paths=PackedStringArray("spawnTimer")]
 script = ExtResource("1_ykqwm")
@@ -14,7 +15,10 @@ fishProbability = 0.3
 spawnTimer = NodePath("Timer")
 downSpawnTime = 0.376
 minTime = 0.1
+addSpeedDifficulty = 2.0
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 1.5
 autostart = true
+
+[node name="ScoreManager" parent="." instance=ExtResource("5_h8fw6")]
