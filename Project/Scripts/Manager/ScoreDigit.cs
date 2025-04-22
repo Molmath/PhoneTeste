@@ -1,6 +1,7 @@
 using Com.IsartDigital.ProjectName;
 using Com.IsartDigital.Utils.Tweens;
 using Godot;
+using Godot.NativeInterop;
 using System;
 using static System.Formats.Asn1.AsnWriter;
 
@@ -111,7 +112,8 @@ public partial class ScoreDigit : Control
             }
         }
     }
-  
+
+
     private void KillColumn(ScoreDigit pRoot)
     {
         if (EndColumnIsEmpty(pRoot, out ScoreDigit lChild))

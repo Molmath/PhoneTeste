@@ -10,8 +10,8 @@ ScoreContainer = NodePath("Score Container")
 timer = NodePath("Timer")
 
 [node name="Score Container" type="CanvasLayer" parent="."]
-offset = Vector2(100, 30)
-transform = Transform2D(1, 0, 0, 1, 100, 30)
+offset = Vector2(500, 500)
+transform = Transform2D(1, 0, 0, 1, 500, 500)
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.5

@@ -32,7 +32,6 @@ public partial class Main : Node2D
             if (value >= clampSpawnTimeDifficulty) spawnTimer.WaitTime = (initTime - initTime * clampSpawnTimeDifficulty);
             else spawnTimer.WaitTime = (initTime - initTime * value);
             if (value >= clampSpawnSpeedDifficulty) globalSpeed = addSpeedDifficulty * value;
-
         } 
     }
 

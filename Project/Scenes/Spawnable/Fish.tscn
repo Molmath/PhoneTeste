@@ -1,23 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://do42og7ljhfe3"]
+[gd_scene load_steps=5 format=3 uid="uid://do42og7ljhfe3"]
 
 [ext_resource type="Script" path="res://Scripts/Spawnable/Spawnable.cs" id="1_ryl2t"]
-[ext_resource type="Texture2D" uid="uid://bcr2o88sg8xok" path="res://Assets/Placeholder/Spawnabel/Fish/Fish_Calamar.png" id="2_eaflo"]
-[ext_resource type="Texture2D" uid="uid://r54616fgv4bk" path="res://Assets/Placeholder/Spawnabel/Fish/Fish_PoissonChirurgien.png" id="3_20hod"]
 [ext_resource type="Texture2D" uid="uid://dnwf43ui4ogh1" path="res://Assets/Placeholder/Spawnabel/Fish/placeholder_poisson_anchois.png" id="4_a3ksw"]
 [ext_resource type="Texture2D" uid="uid://dxkl708sb5wlw" path="res://Assets/Placeholder/Spawnabel/Fish/DECO/FISH_DECO_FRONT.png" id="5_iohpy"]
 [ext_resource type="Texture2D" uid="uid://chpbudiw8o2iv" path="res://Assets/Placeholder/Spawnabel/Fish/DECO/FISH_DECO_BEHIND.png" id="6_25k18"]
 
-[node name="Fish" type="Node2D" node_paths=PackedStringArray("renderer")]
+[node name="Fish" type="Node2D"]
 rotation = -3.20093
 script = ExtResource("1_ryl2t")
-renderer = NodePath("Renderer")
-speed = 150.0
-possibilityTexture = Array[Texture2D]([ExtResource("2_eaflo"), ExtResource("3_20hod"), ExtResource("4_a3ksw")])
-minScale = 0.2
-maxScale = 0.5
-bounceShift = 2.0
-wavePower = 2.0
-baseReward = -15
 
 [node name="Renderer" type="Sprite2D" parent="."]
 rotation = 3.14159

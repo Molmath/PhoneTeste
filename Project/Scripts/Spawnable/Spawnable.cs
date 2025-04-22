@@ -70,6 +70,7 @@ public partial class Spawnable : Node2D
        base._Process(delta);
        float lDelta = (float)delta;
         processAction?.Invoke(lDelta);
+        if (this.ExitScreen(main.screenSize)) ExitScreen();
     }
     private void Move(float pDelta)
     {
@@ -97,6 +98,10 @@ public partial class Spawnable : Node2D
             return true;
         }
         return false;
+    }
+    protected virtual void ExitScreen()
+    {
+
     }
     protected virtual void Finish()
     {

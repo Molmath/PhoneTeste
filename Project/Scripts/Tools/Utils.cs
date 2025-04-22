@@ -14,6 +14,19 @@ namespace Com.IsartDigital.ProjectName
         ROTATION = "rotation",
         ROTATION_DEGREES = "rotation_degrees",
         SELF_MODULATE = "self_modulate";
+
+        public const int
+        ZERO = 0;
+
+        public static bool ExitScreen(this Node2D pNode, Vector2 pScreenSize)
+        {
+            Vector2 NodePosition = pNode.Position;
+            return pNode.Position.X < ZERO || pNode.Position.Y < ZERO || pNode.Position.X > pScreenSize.X || pNode.Position.Y > pScreenSize.Y;
+        }
+
+        /// <summary>
+        /// IA
+        /// </summary>
         public static T GetDeepestChildWithClasse<T>(this Node pRoot) where T : Node
         {
             T result = (T)pRoot;
